@@ -1,9 +1,11 @@
 const createStore = require('./createStore');
 const combineReducers = require('./combineReducers');
-const playerReducer = require('./player');
+const player = require('./player');
+const battle = require('./battle');
 
 const rootReducer = combineReducers({
-  player: playerReducer,
+  player,
+  battle,
 });
 
 const store = createStore({}, rootReducer);

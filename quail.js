@@ -1,5 +1,5 @@
 const bird = require("./bird");
-const store = require("./state/player");
+const store = require("./state/store");
 const getRandomInt = require("./util/getRandomInt");
 
 const defense = {
@@ -11,8 +11,8 @@ const defense = {
 const attack = {
   plumeMissile(enemy) {
     store.dispatch({ type: "ATTACK", points: getRandomInt(5) });
-    console.log(store.getState());
     console.log(`You sent a plume missile to ${enemy}`);
+    console.log(store.getState())
   },
 };
 

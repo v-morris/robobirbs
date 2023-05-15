@@ -1,17 +1,13 @@
-const createStore = require("./createStore");
-
 const initialState = {
-  player: {
-    hitpoints: 10,
-  },
+  hitpoints: 10,
 };
 
-function reducer(state, action) {
+function playerReducer(state = initialState, action) {
   switch (action.type) {
     case "ATTACK":
-      state.player = {
-        ...state.player,
-        hitpoints: state.player.hitpoints - action.points,
+      state = {
+        ...state,
+        hitpoints: state.hitpoints - action.points,
       };
       break;
     default:
@@ -21,6 +17,4 @@ function reducer(state, action) {
   return state;
 }
 
-const store = createStore(initialState, reducer);
-
-module.exports = store;
+module.exports = playerReducer;

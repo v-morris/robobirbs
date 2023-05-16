@@ -1,6 +1,6 @@
-const bird = require("./bird");
-const store = require("./state/store");
-const getRandomInt = require("./util/getRandomInt");
+const bird = require('./bird');
+const store = require('./state/store');
+const getRandomInt = require('./util/getRandomInt');
 
 const defense = {
   dodge(enemy) {
@@ -10,18 +10,38 @@ const defense = {
 
 const attack = {
   plumeMissile(enemy) {
-    store.dispatch({ type: "BATTLE", result: 'SUCCESS', points: getRandomInt(5) });
+    store.dispatch({
+      type: 'ATTACK',
+      result: 'SUCCESS',
+      hitpoints: getRandomInt(5),
+    });
 
-    if(store.getState().battle.result === 'SUCCESS'){
+    const isPlayerTurn = store.getState().battle.turnIndicator === 'PLAYER';
+    const isBattleSuccess = store.getState().battle.result === 'SUCCESS';
+
+    if (isBattleSuccess) {
       console.log(`You sent a plume missile to ${enemy}`);
-      // remove enemy hitpoints
-    } else if(store.getState().battle.result === 'FAILURE'){
+      if (isPlayerTurn) {
+        store.dispatch({
+          player: 'ENEMY',
+          type: 'TAKE_DAMAGE',
+          hitpoints: store.getState().battle.hitpoints,
+        });
+      } else {
+        store.dispatch({
+          player: 'PLAYER',
+          type: 'TAKE_DAMAGE',
+          hitpoints: store.getState().battle.hitpoints,
+        });
+      }
+    } else {
       console.log(`You failed to attack ${enemy}`);
-      // do nothing to hit points
     }
+    console.log(store.getState().battle);
+    console.log(store.getState().enemy);
   },
 };
 
 const quail = Object.assign(Object.create(bird), attack, defense);
 
-quail.plumeMissile("robo enemy");
+module.exports = quail;

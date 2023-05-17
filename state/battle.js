@@ -1,4 +1,5 @@
 const initialState = {
+  isBattleActive: false,
   turnIndicator: null,
   result: null,
   hitpoints: null,
@@ -6,7 +7,7 @@ const initialState = {
 
 function battleReducer(state = initialState, action) {
   switch (action.type) {
-    case 'INITIALIZE_TURN':
+    case 'SET_TURN':
       state = {
         ...state,
         turnIndicator: action.turnIndicator,
@@ -26,14 +27,22 @@ function battleReducer(state = initialState, action) {
         hitpoints: action.hitpoints,
       };
       break;
+    case 'ACTIVATE_BATTLE':
+      state = {
+        ...state,
+        isBattleActive: true,
+      };
+      break;
     case 'BATTLE_RESET':
       state = {
         ...state,
         ...initialState,
       };
+      break;
     default:
       break;
   }
+
   return state;
 }
 

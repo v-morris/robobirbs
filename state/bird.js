@@ -1,5 +1,5 @@
 const initialState = {
-  hitpoints: 10,
+  hitpoints: null,
 };
 
 function createBirdWithPlayerType(playerType = '') {
@@ -11,7 +11,7 @@ function createBirdWithPlayerType(playerType = '') {
       case 'INITIALIZE_PLAYER':
         state = {
           ...state,
-          hitpoints: action.hitpoints,
+          hitpoints: action.details.hitpoints,
         };
         break;
       case 'TAKE_DAMAGE':

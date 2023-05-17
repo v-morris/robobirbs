@@ -2,6 +2,10 @@ const bird = require('./bird');
 const store = require('./state/store');
 const getRandomInt = require('./util/getRandomInt');
 
+const health = {
+  hitpoints: 15,
+};
+
 const defense = {
   dodge(enemy) {
     console.log(`You dodged against ${enemy}`);
@@ -9,7 +13,12 @@ const defense = {
 };
 
 const attack = {
-  plumeMissile(enemy) {
+  // get listAttacks() {
+  //   return Object.entries(Object.getOwnPropertyDescriptors(this))
+  //     .filter(([, desc]) => desc.hasOwnProperty('value'))
+  //     .map(([key]) => key);
+  // },
+  plumeMissile() {
     store.dispatch({
       type: 'ATTACK',
       result: 'SUCCESS',
@@ -20,7 +29,7 @@ const attack = {
     const isBattleSuccess = store.getState().battle.result === 'SUCCESS';
 
     if (isBattleSuccess) {
-      console.log(`You sent a plume missile to ${enemy}`);
+      console.log('Plume missile attack!');
       if (isPlayerTurn) {
         store.dispatch({
           player: 'ENEMY',
@@ -37,11 +46,9 @@ const attack = {
     } else {
       console.log(`You failed to attack ${enemy}`);
     }
-    console.log(store.getState().battle);
-    console.log(store.getState().enemy);
   },
 };
 
-const quail = Object.assign(Object.create(bird), attack, defense);
+const quail = Object.assign(Object.create(bird), attack, defense, health);
 
 module.exports = quail;
